@@ -1,5 +1,4 @@
 # Fontes de Estudo: Formação LangChain e Python da Alura 🐍🤖
----
 
 Este documento serve como um sumário e guia rápido para os módulos e aulas da formação **"LangChain e Python: Orquestrando Aplicações de IA Generativa"** da Alura. Iniciada em **23 de julho de 2025**, esta formação explora como utilizar o LangChain para construir aplicações inteligentes com foco em Large Language Models (LLMs) da OpenAI e outros provedores.
 
