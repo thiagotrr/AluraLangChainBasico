@@ -1,11 +1,9 @@
 # Fontes de Estudo: Formação LangChain e Python da Alura 🐍🤖
-
 ---
 
 Este documento serve como um sumário e guia rápido para os módulos e aulas da formação **"LangChain e Python: Orquestrando Aplicações de IA Generativa"** da Alura. Iniciada em **23 de julho de 2025**, esta formação explora como utilizar o LangChain para construir aplicações inteligentes com foco em Large Language Models (LLMs) da OpenAI e outros provedores.
 
 🔗 [Acesse a formação completa aqui](https://cursos.alura.com.br/formacao-langchain-orquestrando-aplicacoes-ia-generativa)
-
 ---
 
 ## Módulo 1: LangChain e Python - Criando Ferramentas com a LLM OpenAI
@@ -19,7 +17,6 @@ Este módulo introdutório foca nos fundamentos do LangChain e na sua integraç�
 * **Refatorando as cadeias implementadas com LangChain Expression Language (LCEL):** Aprendendo a otimizar e tornar as cadeias mais eficientes usando a LCEL.
 * **Gerenciando a memória de uma conversa com LangChain:** Entendendo como manter o contexto em interações contínuas com a LLM.
 * **Utilizando arquivos para gerar respostas com LangChain:** Integrando dados de arquivos externos para enriquecer as respostas da LLM.
-
 ---
 
 ## Módulo 2: LangChain - Desenvolva Agentes de Inteligência Artificial
