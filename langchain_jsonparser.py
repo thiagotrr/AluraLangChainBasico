@@ -2,53 +2,43 @@
 import os
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
-from langchain.prompts import ChatPromptTemplate
-from langchain.chains import LLMChain
-from langchain.chains import SimpleSequentialChain
 from langchain.globals import set_debug
 from pydantic import Field, BaseModel
 from langchain_core.output_parsers import JsonOutputParser
 
-#set_debug(True)
+set_debug(True)
 
+# MELHORIA: Usar 'description' para descrever o campo, em vez de definir um valor padrão.
 class Destino(BaseModel):
-    cidade: str = Field("cidade a visitar", )
-    motivo: str = Field("motivo pelo qual é interessante visitar a cidade")
+    cidade: str = Field(description="cidade a visitar")
+    motivo: str = Field(description="motivo pelo qual é interessante visitar a cidade")
 
-meu_parser = JsonOutputParser(pydantic_object=Destino)
+parser = JsonOutputParser(pydantic_object=Destino)
 
 llm = ChatOpenAI(
-    api_key=os.environ.get("OPEN_API_KEY"),
+    api_key=os.environ.get("OPENAI_API_KEY"),
     model="gpt-4o",
     temperature=0.7
 )
 
-# Cada um desses é um passo separado, mas que deverão ser conectados.
-modelo_cidade = PromptTemplate(
+# 1. O prompt é criado, incluindo as instruções de formatação do parser.
+prompt = PromptTemplate(
     template = """Sugira uma cidade dado meu interesse por {interesse}.
     {formatacao_de_saida}
     """,
     input_variables=["interesse"],
-    partial_variables={"formatacao_de_saida": meu_parser.get_format_instructions()},
-    parser=meu_parser
+    partial_variables={"formatacao_de_saida": parser.get_format_instructions()}
 )
 
-modelo_restaurante = ChatPromptTemplate.from_template(
-    "Sugira restaurantes populares entre os locais na em {cidade}"
-)
+# 2. A cadeia é montada com LCEL (|) para conectar o prompt, o LLM e o parser.
+#    Este é o fluxo que garante que a saída do LLM seja processada pelo parser.
+chain = prompt | llm | parser
 
-modelo_cultural = ChatPromptTemplate.from_template(
-    "Sugira atividades culturais em {cidade}"
-)
+# 3. A cadeia é invocada com um dicionário como entrada.
+resultado = chain.invoke({"interesse": "praias"})
 
-cadeia_cidade      = LLMChain(prompt=modelo_cidade, llm=llm)
-cadeia_restaurante = LLMChain(prompt=modelo_restaurante, llm=llm)
-cadeia_cultural    = LLMChain(prompt=modelo_cultural, llm=llm)
-
-# verbose=True mostra os detalhes da execução para fins de debug e entendimento.
-# neste exemplo, deixamos somente a cadeia da cidade.
-cadeia = SimpleSequentialChain(chains=[cadeia_cidade])
-
-# Cada cadeira poderá utilizar uma LLM distinta
-resultado = cadeia.invoke("praias")
+# 4. O resultado agora é um dicionário Python limpo, pronto para ser usado.
 print(resultado)
+print(f"\nTipo do resultado: {type(resultado)}")
+print(f"Cidade: {resultado['cidade']}")
+print(f"Motivo: {resultado['motivo']}")
