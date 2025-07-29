@@ -2,3 +2,4 @@ openai==1.97.1 #1.13.3 no curso
 google_genai==1.27.0
 langchain==0.3.26 #0.1.11 no curso
 langchain-openai==0.3.28 #0.0.8 no curso
+langchain_community==0.3.27
