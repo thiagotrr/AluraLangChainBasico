@@ -42,6 +42,7 @@ modelo_cultural = ChatPromptTemplate.from_template(
     "Sugira também atividades culturais em {cidade}."
 )
 
+# Um verdadeiro chat, com rolesm instruções e mensagens
 modelo_final = ChatPromptTemplate.from_messages([
     ("ai", "Sugestão de viagem para a cidade: {cidade}"),
     ("ai", "Restaurantes que você não pode perder: {restaurantes}"),
